@@ -1,0 +1,77 @@
+{
+    "AddInfo": {
+        "PaymentType": "Barzahlung",
+        "DiscountPercent": 10,
+        "Total": 9.18
+    },
+    "OrderID": "3",
+    "ArticleList": {
+        "Article": [
+            {
+                "Price": 7.8,
+                "ArticleSize": "Mittel (ca. 32cm)",
+                "ArticleName": "Pizza Hawaii",
+                "ArticleNo": "P22",
+                "SubArticleList": {
+                    "SubArticle": [
+                        {
+                            "Comment": null,
+                            "Price": 0.9,
+                            "Count": 1,
+                            "ArticleName": "Schinken"
+                        },
+                        {
+                            "Comment": null,
+                            "Price": 1.5,
+                            "Count": 1,
+                            "ArticleName": "Putenbruststreifen"
+                        },
+                        {
+                            "Comment": "hot!",
+                            "Price": null,
+                            "Count": 1
+                        }
+                    ]
+                },
+                "Count": 1
+            },
+            {
+                "Price": null,
+                "ArticleSize": null,
+                "ArticleName": null,
+                "ArticleNo": null,
+                "SubArticleList": null,
+                "Count": 1,
+                "Comment": "Testbestellung: Pronto Pronto!"
+            }
+        ]
+    },
+    "StoreData": {
+        "StoreId": null,
+        "StoreName": "My online-shop"
+    },
+    "ServerData": {
+        "Agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko\/20100101 Firefox\/134.0",
+        "CreateDateTime": "2025-01-20T07:57:45+01:00",
+        "Referer": null,
+        "IpAddress": "127.0.0.1"
+    },
+    "Customer": {
+        "DeliveryAddress": {
+            "LastName": "Singh",
+            "AddAddress": null,
+            "Company": null,
+            "Zip": "28205",
+            "Street": "Hoyaer Stra\u00dfe",
+            "Latitude": null,
+            "Country": null,
+            "Longitude": null,
+            "HouseNo": "13",
+            "Title": null,
+            "PhoneNo": "0421-2477828",
+            "City": "Bremen",
+            "FirstName": "Harmit",
+            "EMail": "support@winorder.de"
+        }
+    }
+}

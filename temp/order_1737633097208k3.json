@@ -1,0 +1,79 @@
+{
+  "AddInfo": {
+    "PaymentType": "paypal",
+    "DiscountPercent": 10,
+    "Total": 9.18
+  },
+  "OrderID": "17376330972093s1",
+  "ArticleList": {
+    "Article": [
+      {
+        "Price": 7.8,
+        "ArticleSize": "Mittel (ca. 32cm)",
+        "ArticleName": "Pizza Hawaii",
+        "ArticleNo": "P22",
+        "SubArticleList": {
+          "SubArticle": [
+            {
+              "Comment": "",
+              "Price": 0.9,
+              "Count": 1,
+              "ArticleName": "Schinken"
+            },
+            {
+              "Comment": "",
+              "Price": 1.5,
+              "Count": 1,
+              "ArticleName": "Putenbruststreifen"
+            },
+            {
+              "Comment": "hot!",
+              "Price": "",
+              "Count": 1
+            }
+          ]
+        },
+        "Count": 1
+      },
+      {
+        "Price": "",
+        "ArticleSize": "",
+        "ArticleName": "",
+        "ArticleNo": "",
+        "SubArticleList": {
+          "SubArticle": []
+        },
+        "Count": 1,
+        "Comment": "Testbestellung: Pronto Pronto!"
+      }
+    ]
+  },
+  "StoreData": {
+    "StoreId": "",
+    "StoreName": "My online-shop"
+  },
+  "ServerData": {
+    "Agent": "Mozilla/5.0",
+    "CreateDateTime": "2025-01-23T11:51:37.208Z",
+    "Referer": "",
+    "IpAddress": "127.0.0.1"
+  },
+  "Customer": {
+    "DeliveryAddress": {
+      "LastName": "Singh",
+      "AddAddress": "",
+      "Company": "",
+      "Zip": "28205",
+      "Street": "Hoyaer Straße",
+      "Latitude": "",
+      "Country": "",
+      "Longitude": "",
+      "HouseNo": "13",
+      "Title": "",
+      "PhoneNo": "0421-2477828",
+      "City": "Bremen",
+      "FirstName": "Gurmail",
+      "EMail": "support@winorder.de"
+    }
+  }
+}
