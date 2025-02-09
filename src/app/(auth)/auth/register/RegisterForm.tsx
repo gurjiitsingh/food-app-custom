@@ -3,7 +3,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-//import { registerUser } from '@/app/actions/auth/singUp'
+import { addUser } from "@/app/action/checkout/dbOperations";
 import { signUpSchema, TsignUpSchema } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
@@ -13,15 +13,15 @@ const RegisterForm = () => {
     formState: { errors },//, isSubmitting
     handleSubmit,
    // setError,
-    setValue
+   // setValue
   } = useForm<TsignUpSchema>({
     resolver: zodResolver(signUpSchema),
   });
 
-  setValue("username","gurjit1")
-  setValue("email","g@mail.com")
-  setValue("password","123456")
-  setValue("confirmPassword","123456")
+  // setValue("username","gurjit1")
+  // setValue("email","g@mail.com")
+  // setValue("password","123456")
+  // setValue("confirmPassword","123456")
   async function onSubmitUserRegister(data: TsignUpSchema) {
     //console.log(data);
 
@@ -32,7 +32,7 @@ const RegisterForm = () => {
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
 
-    //const result = await registerUser(formData);
+    const result = await addUser(formData);
 
     // const response = await fetch("/api/auth/signup", {
     //   method: "POST",

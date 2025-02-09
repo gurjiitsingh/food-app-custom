@@ -174,9 +174,6 @@ export const editCategorySchema = z.object({
 
 export type TeditCategorySchema = z.infer<typeof editCategorySchema>;
 
-
-
-
 export const brandSchema = z.object({
   name: z
     .string()
@@ -219,8 +216,6 @@ export const editBrandSchema = z.object({
 export type TeditBrandSchema = z.infer<typeof editBrandSchema>;
 
 
-
-
 export const addressSchima = z.object({
   name: z
   .string()
@@ -249,6 +244,7 @@ export const addressSchimaCheckout = z.object({
   .trim()
   .min(2, { message: "Last name is very short" })
   .max(30, { message: "Last name is very long" }),
+  password:z.string().optional(),
   email: z.string().min(2, { message: "Email is required" }),
   mobNo: z.string().min(2, { message: "Mobile is required" }),
   addressLine1: z.string().optional(),
@@ -256,8 +252,23 @@ export const addressSchimaCheckout = z.object({
   city: z.string().min(2, { message: "City is required" }),
   state: z.string().min(2, { message: "State is required" }),
   zipCode: z.string().min(2, { message: "Zip code is required" }),
- // userId: z.string().optional(),
+  userId: z.string().optional(),
 //  orderDetail:z.string().optional(),
 });
+
+
+export const userSchima = z.object({
+  username: z
+  .string()
+  .trim()
+  .min(2, { message: "User name is very short" })
+  .max(30, { message: "User name is very long" }),
+  password:z.string().optional(),
+  confirmPassword:z.string().optional(),
+   email: z.string().min(2, { message: "Email is required" }),
+ 
+});
+
+export type TuserSchem = z.infer<typeof userSchima>;
 
 export type TaddressSchemaCheckout = z.infer<typeof addressSchimaCheckout>;

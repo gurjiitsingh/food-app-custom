@@ -37,16 +37,16 @@ const Sidebar = () => {
       link:"/user/address",
       icon:<FaUserTie />
     },
-    {
-      name:"Payment methods",
-      link:"/admin/paymentMethods",
-      icon: <GiStarsStack />
-    },
-    {
-      name:"Account details",
-      link:"/admin/account-details",
-      icon: <IoLibrary />
-    }
+    // {
+    //   name:"Payment methods",
+    //   link:"/admin/paymentMethods",
+    //   icon: <GiStarsStack />
+    // },
+    // {
+    //   name:"Account details",
+    //   link:"/admin/account-details",
+    //   icon: <IoLibrary />
+    // }
     
   ]
 

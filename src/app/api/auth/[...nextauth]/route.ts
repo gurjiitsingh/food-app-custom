@@ -4,6 +4,25 @@ import { db } from '@/lib/firebaseConfig';
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
 import { collection, getDocs, limit, query, where } from "@firebase/firestore";
+import { string } from "zod";
+
+// type TProduct = {
+//   product: {
+//     name: string;
+//     _id: string;
+//     image: string;
+//     category: string;
+//   };
+// };
+
+type userData = {
+  userData: { user:string;
+     account:string;
+     profile:string;
+     email:string;
+     credentials:string;
+     }
+};
 
 const handler = NextAuth({
   session: {
@@ -54,32 +73,33 @@ const handler = NextAuth({
         // }
 
 
-        const user1 = {
+        const user = {
           id: current_id,//current_user.id,
           name: current_user.username,
           role: current_user.role,
           email: current_user.email,
         };
-
-        return user1;
+//console.log("user in provider ---",user )
+        return user;
       },
     }),
   ],
 
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }:any) {
+    async signIn({ user, account, profile, email, credentials }) {
       const isAllowedToSignIn = true;
       if (isAllowedToSignIn) {
         return true;
       } else {
         // Return false to display a default error message
-        return false;
+       return false;
         // Or you can return a URL to redirect to:
-        // return '/unauthorized'
+      //   return '/unauthorized'
       }
     },
 
     async redirect({ url, baseUrl }) {
+   //   console.log("in redirect ---",url,"baseurl", baseUrl )
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`
       // Allows callback URLs on the same origin
@@ -87,6 +107,7 @@ const handler = NextAuth({
       return baseUrl
     },
     async jwt({ token, user, session }:any) {
+    //  console.log("in jwt --------",user,"session--------", session,"token ----- ",token )
      // call stack 1
       // you can get user values from databas directly here
       if (user) {
@@ -105,12 +126,13 @@ const handler = NextAuth({
     async session({ session, token }:any) {
       // call stack 2
      //token pocess all values, assign value to session
+     
       session.user.id = token.id;
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.role = token.role;
       session.user.image = token.picture;
-      
+     // console.log("in session --------", session, token )
       return session;
     },
   },

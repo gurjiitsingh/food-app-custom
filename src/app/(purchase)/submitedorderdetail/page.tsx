@@ -1,17 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useCartContext } from "@/store/CartContext";
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
+//import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import DynamicRadioButtons from "@/components/formComponents/DynamicRadioButtons";
+//import DynamicRadioButtons from "@/components/formComponents/DynamicRadioButtons";
 
 
-const options = [
-  { label: 'Credit Card', value: 'credit_cart' },
-  { label: 'Netbanking', value: 'netbanking' },
-  { label: 'UPI', value: 'upi' },
-];
+// const options = [
+//   { label: 'Credit Card', value: 'credit_cart' },
+//   { label: 'Netbanking', value: 'netbanking' },
+//   { label: 'UPI', value: 'upi' },
+// ];
 
 const page = () => {
   // const { data: session } = useSession();

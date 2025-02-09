@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import CartContent from "@/components/Cart/cartcontent";
-import Link from "next/link";
+//import Link from "next/link";
 //import { useSession } from "next-auth/react";
-import { FaCheckCircle } from "react-icons/fa";
-import path from "path";
+//import { FaCheckCircle } from "react-icons/fa";
+//import path from "path";
 import CartLeft from "@/components/Cart/CartLeft";
 const Cart = () => {
   // const { data: session } = useSession();

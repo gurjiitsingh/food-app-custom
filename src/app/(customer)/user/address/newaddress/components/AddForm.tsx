@@ -5,40 +5,37 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addressSchimaCheckout, TaddressSchemaCheckout } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 //import { useSearchParams } from "next/navigation";
-import {
-  editCustomerAddress,
-  searchAddressById,
-} from "@/app/action/checkout/dbOperations";
+import { newCustomerAddress, searchUserById, } from "@/app/action/checkout/dbOperations";
 
 import { useSession } from "next-auth/react";
 
-const EditForm = () => {
+const AddForm = () => {
   const { data: session } = useSession();//, status
-  //useEffect(() => {}, [session]);
+  
    useEffect(()=>{
-    async function getUserDataById(userId:{userId:string}) {
-      console.log("addressRes", userId);
-    const  addressRes = (await searchAddressById(userId)) ;
-   
-      if (addressRes !== null) {
-        console.log("++++++++++++++", userId)
-        setValue("email", addressRes.email);
-        setValue("firstName", addressRes.firstName);
-        setValue("lastName", addressRes.lastName);
-        setValue("userId", userId);
-        // setValue("email", addressRes.email);
-        setValue("mobNo", addressRes.mobNo);
-        setValue("addressLine1", addressRes.addressLine1);
-        setValue("addressLine2", addressRes.addressLine2);
-        setValue("city", addressRes.city);
-        setValue("state", addressRes.state);
-        setValue("zipCode", addressRes.zipCode);
-      } 
-  }  
-   if(session?.user?.id !== undefined){
-  getUserDataById(session?.user?.id)
-  }  
-  },[session])
+      async function getUserDataById(userId:{userId:string}) {
+        console.log("addressRes", userId);
+      const  userRes = (await searchUserById(userId)) ;
+     
+        if (userRes !== null) {
+          console.log("++++++++++++++", userId)
+          setValue("email", userRes.email);
+          // setValue("firstName", addressRes.firstName);
+          // setValue("lastName", addressRes.lastName);
+          // setValue("userId", userId);
+          // // setValue("email", addressRes.email);
+          // setValue("mobNo", addressRes.mobNo);
+          // setValue("addressLine1", addressRes.addressLine1);
+          // setValue("addressLine2", addressRes.addressLine2);
+          // setValue("city", addressRes.city);
+          // setValue("state", addressRes.state);
+          // setValue("zipCode", addressRes.zipCode);
+        } 
+    }  
+     if(session?.user?.id !== undefined){
+      getUserDataById(session?.user?.id)
+    }  
+    },[session])
 
 
     const {
@@ -53,7 +50,7 @@ const EditForm = () => {
     resolver: zodResolver(addressSchimaCheckout),
   });
 
-  //setValue("userId", session?.user?.id);
+  setValue("userId", session?.user?.id);
 
   async function onSubmit(data: TaddressSchemaCheckout) {
   console.log("onsubmit -------------",data)
@@ -71,7 +68,7 @@ const EditForm = () => {
     formData.append("state", data.state);
     formData.append("zipCode", data.zipCode);
 
-    await editCustomerAddress(formData);
+    await newCustomerAddress(formData);
   
   }
  
@@ -80,11 +77,10 @@ const EditForm = () => {
       <div className="flex flex-col">
         <div className="flex flex-col gap-2 mb-4">
           <h2 className="text-5 text-slate-600 font-semibold py-3">
-          Your Shipping address
+          Add Shipping address
           </h2>
-
           <p className="text-sm">
-            Just change and click Edit Address button, to change your address
+            
           </p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -215,5 +211,5 @@ const EditForm = () => {
   );
 };
 
-export default EditForm;
+export default AddForm;
 

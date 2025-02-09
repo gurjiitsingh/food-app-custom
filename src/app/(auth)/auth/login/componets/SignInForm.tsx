@@ -5,6 +5,8 @@ import { FormEvent } from "react"
 import { signIn } from "next-auth/react";// useSession
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 
 const SignIn = () => {
 
@@ -84,11 +86,13 @@ if(!response?.error){
         <Button type="submit">Login </Button>
       </div>
     </form>
-
-
+<div className="w-full text-center mt-5">
+If Not register  <Link  href="/auth/register"> click to register</Link>
+    </div>
     </Card>
 
- 
+
+
   )
 }
 

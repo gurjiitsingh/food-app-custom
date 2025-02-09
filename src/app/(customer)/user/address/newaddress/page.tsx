@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 //import Form from "./components/Form";
-import EditForm from "./components/EditForm";
+import AddForm from "./components/AddForm";
 import { SessionProvider } from "next-auth/react"
 //import ViewList from './components/ViewList';
 
@@ -23,7 +23,7 @@ export default  function page({searchParams}) {
      
           
           
-          <EditForm />
+          <AddForm />
          
          
          
