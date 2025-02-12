@@ -1,14 +1,21 @@
 "use server";
-import { newPorductSchema, TnewProductSchema, editPorductSchema, TeditProductSchema } from "@/lib/types";
-import { features } from "process";
-import { z } from "zod";
+import { newPorductSchema, editPorductSchema,  TnewProductSchema, ShowPorductT } from "@/lib/types";
+
+//import { z } from "zod";
 import { deleteImage, upload } from "@/lib/cloudinary";
 import { db } from "@/lib/firebaseConfig";
 //import { product } from "@/--------db/schema";
-import { Weight } from "lucide-react";
-import { revalidatePath } from "next/cache";
+// import { Weight } from "lucide-react";
+// import { revalidatePath } from "next/cache";
 
-import { addDoc, collection, doc, getDoc, getDocs } from "@firebase/firestore";
+import { addDoc, collection,  getDocs, query } from "@firebase/firestore";//doc, getDoc,
+//import { orderProductsTArr } from "@/lib/type/orderType";
+//import {  productTArr,  TnewProductSchemaArr } from "@/lib/type/productType";
+import { orderProductsTArr } from "@/lib/types/orderType";
+import { productT, productTArr, ProductType, ProductTypeArr, TnewProductSchemaArr } from "@/lib/types/productType";
+import { cartDataT } from "@/lib/types/cartDataType";
+//productT,productTs, productTsArr, TproductSchemaArr
+
 
 //from "@/lib/firestore/products/write";
 
@@ -60,7 +67,8 @@ export async function addNewProduct(formData: FormData) {
     imageUrl = await upload(image);
     console.log(imageUrl);
   } catch (error) {
-    //  throw new Error("error")
+      throw new Error("error")
+      console.log(error)
     return { errors: "image cannot uploaded" };
   }
 
@@ -90,43 +98,45 @@ const data = {
   return { message: "Product saved" };
 }
 
-export async function deleteProduct(id:string, oldImgageUrl:string) {
+export async function deleteProduct(id:string, oldImgageUrl:string) {}
+
+// export async function deleteProduct(id:string, oldImgageUrl:string) {
   
-  const result = await db.delete(product).where(eq(product.id, id));
+//   const result = await db.delete(product).where(eq(product.id, id));
 
-  if (result?.rowCount === 1) {
+//   if (result?.rowCount === 1) {
 
-    const imageUrlArray = oldImgageUrl.split("/");
-    console.log(imageUrlArray[imageUrlArray.length - 1]);
-    const imageName =
-      imageUrlArray[imageUrlArray.length - 2] +
-      "/" +
-      imageUrlArray[imageUrlArray.length - 1];
+//     const imageUrlArray = oldImgageUrl.split("/");
+//     console.log(imageUrlArray[imageUrlArray.length - 1]);
+//     const imageName =
+//       imageUrlArray[imageUrlArray.length - 2] +
+//       "/" +
+//       imageUrlArray[imageUrlArray.length - 1];
   
-    const image_public_id = imageName.split(".")[0];
-    console.log(image_public_id);
-    try {
-      let deleteResult = await deleteImage(image_public_id);
-      console.log("image delete data", deleteResult);
-    } catch (error) {
-     // console.log(error);
-      return {errors:"Somthing went wrong, can not delete product picture"}
-    }
+//     const image_public_id = imageName.split(".")[0];
+//     console.log(image_public_id);
+//     try {
+//       let deleteResult = await deleteImage(image_public_id);
+//       console.log("image delete data", deleteResult);
+//     } catch (error) {
+//      // console.log(error);
+//       return {errors:"Somthing went wrong, can not delete product picture"}
+//     }
 
-       return {
-      message: { sucess: "Deleted product" },
-    };
-  }else{
-    return {errors:"Somthing went wrong, can not delete product"}
-  }
+//        return {
+//       message: { sucess: "Deleted product" },
+//     };
+//   }else{
+//     return {errors:"Somthing went wrong, can not delete product"}
+//   }
 
  
-}
+// }
 
 export async function editProduct(formData:FormData){
   const id = formData.get("id");
   const image = formData.get("image");
-  const oldImgageUrl = formData.get("oldImgageUrl");
+  const oldImgageUrl = formData.get("oldImgageUrl") as string;
 
 
 
@@ -141,12 +151,12 @@ export async function editProduct(formData:FormData){
     // console.log(formData.get("image"));
     // console.log(formData.get("isFeatured"));
 
-    const isF = formData.get("isFeatured");
+   // const isF = formData.get("isFeatured");
 
     
-  if (formData.get("isFeatured").toString() === "true") {
-    featured_img = true;
-  }
+  // if (formData.get("isFeatured").toString() === "true") {
+  //   featured_img = true;
+  // }
   
   const receivedData = {
     name: formData.get("name"),
@@ -182,21 +192,22 @@ export async function editProduct(formData:FormData){
    
 
     try {
-      imageUrl = await upload(image);
+      imageUrl = await upload(image) as string;
     } catch (error) {
       //  throw new Error("error")
+      console.log(error)
       return { errors: "image cannot uploaded" };
     }
 
-    const imageUrlArray = oldImgageUrl.split('/');
+    const imageUrlArray = oldImgageUrl?.split('/');
     console.log("image public id", imageUrlArray[imageUrlArray.length-1])
     const imageName = imageUrlArray[imageUrlArray.length-2]+"/"+imageUrlArray[imageUrlArray.length-1]
  
     const image_public_id = imageName.split('.')[0] 
 
     try {
-      let deleteResult = await deleteImage(image_public_id);
-    
+      const deleteResult = await deleteImage(image_public_id);
+    console.log(deleteResult);
    } catch (error) {
     console.log(error)
    }
@@ -206,30 +217,30 @@ export async function editProduct(formData:FormData){
    // update database
    try {
 
-     const result = await db.update(product).set({
-      name: formData.get("name"),
-      price: formData.get("price"),
-      brand: formData.get("brand"),
-      weight: formData.get("weight"),
-      dimensions: formData.get("dimensions"),
-      category: formData.get("productCat"),
-      Desc: formData.get("productDesc"),
-      image: imageUrl,
-      isFeatured: featured_img,
-    }).where(eq(product.id, id));
+    //  const result = await db.update(product).set({
+    //   name: formData.get("name"),
+    //   price: formData.get("price"),
+    //   brand: formData.get("brand"),
+    //   weight: formData.get("weight"),
+    //   dimensions: formData.get("dimensions"),
+    //   category: formData.get("productCat"),
+    //   Desc: formData.get("productDesc"),
+    //   image: imageUrl,
+    //   isFeatured: featured_img,
+    // }).where(eq(product.id, id));
 
     //console.log(result)
-    if (result?.rowCount === 1) {
-      //revalidatePath("/admin/product/editform");
-      return {
-        message: { sucess: "Updated " },
-      };
-    }
+    // if (result?.rowCount === 1) {
+    //   //revalidatePath("/admin/product/editform");
+    //   return {
+    //     message: { sucess: "Updated " },
+    //   };
+    // }
     
    } catch (error) {
     console.log("error", error);
   
-      return { errors: "Cannot update" };
+   //   return { errors: "Cannot update" };
    
    }
 
@@ -238,33 +249,48 @@ export async function editProduct(formData:FormData){
 
 
 
-export async function fetchProducts(){
+export async function fetchProducts():Promise<cartDataT[]>{
 
- // const result = await db.select().from(product);
+  // const result = await getDocs(collection(db, "product"))
+  // let data = [];
+  // result.forEach((doc) => {
+  //   data.push({id:doc.id, ...doc.data()});
+  // });
+  //  return data;
+
   const result = await getDocs(collection(db, "product"))
-//  console.log(result.docs)
-  let data = [];
+  let data = [] as cartDataT[];
   result.forEach((doc) => {
-    data.push({id:doc.id, ...doc.data()});
+    const pData = {id:doc.id, ...doc.data()} as cartDataT;
+    data.push(pData);
   });
- // console.log(data)
-  return data;
-}
+   return data;
 
-export async function fetchProductById(id:string){
+  // let data = [] as cartDataT[];
+  //   const q = query(collection(db, "product"));
+  //   const querySnapshot = await getDocs(q);
+  //   querySnapshot.forEach((doc) => {
+  //     const ab = doc.data() as cartDataT;
+  //     data.push(ab);
+  //   });
+  //   return data;
+   }
 
-  const docRef = doc(db, "product", id);
-  const docSnap = await getDoc(docRef);
-  
-  if (docSnap.exists()) {
- //   console.log("Document data:", docSnap.data());
-  } else {
-    // docSnap.data() will be undefined in this case
-//    console.log("No such document!");
-  }
 
-  return docSnap.data();
-  // const result = await db.select().from(product).where(eq(product.id,id));
-  // return result[0];
-  
-}
+
+export async function fetchProductById(id:string):Promise<ProductTypeArr>{
+
+  // const docRef = doc(db, "product", id);
+  // const docSnap = await getDoc(docRef);
+  //  return docSnap.data();
+
+
+   let data = [] as ProductTypeArr;
+    const q = query(collection(db, "product", id));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      data = doc.data() as ProductTypeArr;
+    });
+    return data;
+   }
+   

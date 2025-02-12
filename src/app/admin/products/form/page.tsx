@@ -7,23 +7,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { newPorductSchema, TnewProductSchema } from "@/lib/types";
 //import { fetchbrands } from "@/app/action/brads/dbOperations";
 import { addNewProduct } from "@/app/action/products/dbOperation";
-import Images from "@/app/admin/products/form/componets/Images";
-import { deleteCategory, fetchCategories } from '@/app/action/category/dbOperations';
-import Input from "./componets/input";
+//import Images from "@/app/admin/products/form/componets/Images";
+import { fetchCategories } from '@/app/action/category/dbOperations';
+import { categoryTypeArr } from "@/lib/types/categoryType";
+//import Input from "./componets/input";
 
 
-type Terror = {
-  name: string | null;
-  price: string | null;
-  isFeatured: string | null;
- // company: string | null;
-  productCat: string | null;
-  productDesc: string | null;
-  image: string | null;
-};
-const page = () => {
-  const [categories, setCategory] = useState([]);
-  const [brands, setBrand] = useState([]);
+// type Terror = {
+//   name: string | null;
+//   price: string | null;
+//   isFeatured: string | null;
+//  // company: string | null;
+//   productCat: string | null;
+//   productDesc: string | null;
+//   image: string | null;
+// };
+const Page = () => {
+  const [categories, setCategory] = useState<categoryTypeArr>([]);
+ 
 
   useEffect(() => {
     async function prefetch() {
@@ -39,13 +40,13 @@ const page = () => {
 
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     setValue,
-    control,
-    watch,
+    // control,
+    // watch,
     handleSubmit,
-    setError,
-    formState: { dirtyFields },
+   // setError,
+    formState: {  },//dirtyFields
   } = useForm<TnewProductSchema>({
     resolver: zodResolver(newPorductSchema),
   });
@@ -59,7 +60,7 @@ const page = () => {
 console.log("images---------",data)
     formData.append("name", data.name);
     formData.append("price", data.price);
-    formData.append("isFeatured", data.isFeatured);
+   // formData.append("isFeatured", data.isFeatured);
     //formData.append("brand", data.brand);
     // formData.append("weight", data.weight);
     // formData.append("dimensions", data.dimensions);
@@ -84,47 +85,47 @@ console.log("images---------",data)
       alert("Some thing went wrong");
     }
 
-    if (result.errors) {
-      // not network error but data validation error
-      const errors: Terror = result.errors;
+    // if (result.errors) {
+    //   // not network error but data validation error
+    //   const errors: Terror = result.errors;
 
-      if (errors.name) {
-        setError("name", {
-          type: "server",
-          message: errors.name,
-        });
-      } else if (errors.price) {
-        setError("price", {
-          type: "server",
-          message: errors.price,
-        });
-      } else if (errors.productCat) {
-        setError("productCat", {
-          type: "server",
-          message: errors.productCat,
-        });
-      }
-      if (errors.productDesc) {
-        setError("productDesc", {
-          type: "server",
-          message: errors.productDesc,
-        });
-      }
-      if (errors.image) {
-        setError("image", {
-          type: "server",
-          message: errors.image,
-        });
-      }
-      if (errors.company) {
-        // setError("company", {
-        //   type: "server",
-        //   message: errors.company,
-        // });
-      } else {
-        //  alert("Something went wrong");
-      }
-    }
+    //   if (errors.name) {
+    //     setError("name", {
+    //       type: "server",
+    //       message: errors.name,
+    //     });
+    //   } else if (errors.price) {
+    //     setError("price", {
+    //       type: "server",
+    //       message: errors.price,
+    //     });
+    //   } else if (errors.productCat) {
+    //     setError("productCat", {
+    //       type: "server",
+    //       message: errors.productCat,
+    //     });
+    //   }
+    //   if (errors.productDesc) {
+    //     setError("productDesc", {
+    //       type: "server",
+    //       message: errors.productDesc,
+    //     });
+    //   }
+    //   if (errors.image) {
+    //     setError("image", {
+    //       type: "server",
+    //       message: errors.image,
+    //     });
+    //   }
+    //   if (errors.company) {
+    //     // setError("company", {
+    //     //   type: "server",
+    //     //   message: errors.company,
+    //     // });
+    //   } else {
+    //     //  alert("Something went wrong");
+    //   }
+    // }
 
     console.log("response in create product form ",result);
   }
@@ -281,4 +282,4 @@ console.log("images---------",data)
   );
 };
 
-export default page;
+export default Page;

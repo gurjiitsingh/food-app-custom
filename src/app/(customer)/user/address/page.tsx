@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react"
 //import ViewList from './components/ViewList';
 
 
-export default  function page({searchParams}) {
+export default  function page() {
   
  
   return (

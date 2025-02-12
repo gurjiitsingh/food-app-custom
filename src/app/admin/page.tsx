@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 
-const page = () => {
+const Page = () => {
   return (
     <div className='h-screen flex flex-col '>
      
@@ -9,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -1,19 +1,20 @@
 import React from 'react'
 import { FaRegUser } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+
 //import { FaRegUser } from "react-icons/fa";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
+   // DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
+import { sessionT } from '@/lib/types/sessionType';
 
-const LinkDropdown = ({session}) => {
+const LinkDropdown = ({session}:{session:sessionT}) => {
   
   return (
     <DropdownMenu>

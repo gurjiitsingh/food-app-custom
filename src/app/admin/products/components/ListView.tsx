@@ -4,37 +4,38 @@ type productTableProps = {
   limit?: number;
   title?: string;
 };
-import { TProduct } from "@/types/products";
+//import { TProduct } from "@/types/products";
 
 
 import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCell,
+ // TableCell,
   TableHead,
   TableHeader,
   TableRow,
-  TableCaption,
+  // TableCaption,
 } from "@/components/ui/table";
 
 //import { Button } from "../ui/button";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { MdDeleteForever } from "react-icons/md";
-import { CiEdit } from "react-icons/ci";
+// import Link from "next/link";
+// import Image from "next/image";
+// import { Button } from "@/components/ui/button";
+// import { MdDeleteForever } from "react-icons/md";
+//import { CiEdit } from "react-icons/ci";
 import TableRows from "./TableRows";
 import { fetchProducts } from "@/app/action/products/dbOperation";
+import { cartDataT } from "@/lib/types/cartDataType";
 //import FeaturProductUpdate from "./FeaturProductUpdate";
 
 const ListView = ({ title }: productTableProps) => {
-  const [productData, setProductData] = useState([]);
-var pageNo = 1;
-var limit = 10
+  const [productData, setProductData] = useState<cartDataT[]>([]);
+// var pageNo = 1;
+// var limit = 10
 
   useEffect(() => {
-    async function fetchProduct(): Promise<any>{
+    async function fetchProduct(){
 
 
       try {
@@ -51,9 +52,9 @@ var limit = 10
   }, []);
 
 
-  function handleDelete(id:string){
-    console.log(id)
-  }
+  // function handleDelete(id:string){
+  //   console.log(id)
+  // }
   // Sort posts in dec product based on date
 
 //   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
@@ -82,9 +83,9 @@ var limit = 10
             </TableRow>
           </TableHeader>
           <TableBody>
-            {productData.map((product: TProduct) => {
+            {productData.map((product) => {
               return (
-                <TableRows product={product} />
+                <TableRows key={product.id} product={product} />
               );
             })}
           </TableBody>

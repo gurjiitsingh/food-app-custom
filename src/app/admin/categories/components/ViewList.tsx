@@ -1,29 +1,28 @@
 'use server'
-import React, { useEffect, useState } from 'react'
-import { db } from '@/--------db'
-import { category } from '@/--------db/schema'
-import { eq } from 'drizzle-orm';
+import React from 'react'
 import TableRows from './TableRow'
-
-
 import {
     Table,
     TableBody,
-    TableCell,
+   // TableCell,
     TableHead,
     TableHeader,
     TableRow,
     TableCaption,
   } from "@/components/ui/table";
-import { deleteCategory, fetchCategories } from '@/app/action/category/dbOperations';
-
-const ViewList = async ({changeForm}) => {
+import {  fetchCategories } from '@/app/action/category/dbOperations';
+import {  categoryTypeArr } from '@/lib/types/categoryType';
+type Props = {
+  //onClick: React.MouseEventHandler<HTMLButtonElement>
+  changeForm: ()=>void
+};
+const ViewList = async ({changeForm}:Props) => {
   //  const [categories, setCategories ] = useState([])
-  async function deleteItem(itemId: string) {
+  async function deleteItem() {
     "use server"; // mark function as a server action (fixes the error)
     changeForm();
    }
-   let categories
+   let categories = [] as categoryTypeArr;
  // const categories = await db.select().from(category)
   console.log("in client old",categories);
            try {    
@@ -49,8 +48,9 @@ const ViewList = async ({changeForm}) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {categories.map((item: Titem) => {
-          return <TableRows deleteItem={deleteItem}  key={item.id} item={item} />
+        {categories.map((item) => {
+          // return <TableRows deleteItem={deleteItem}  key={item.id} item={item} />
+          return <TableRows   key={item.id} item={item} />
         })}
       </TableBody>
     </Table>

@@ -5,8 +5,8 @@ import CartContext from '@/store/CartContext'
 
 export const MiniCartSubtotal = () => {
 const { cartData }= useContext(CartContext);
-console.log("in the subtoal");
-console.log(cartData);
+//console.log("in the subtoal");
+//console.log(cartData);
 
  var total=0;
 if(cartData.length>0){

@@ -2,43 +2,57 @@
 import React, {  useEffect } from "react";
 import { useForm } from "react-hook-form"; //, Controller
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addressSchimaCheckout, TaddressSchemaCheckout } from "@/lib/types";
+import { addressSchimaCheckout, TaddressCheckout, TaddressSchemaCheckout } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 //import { useSearchParams } from "next/navigation";
 import {
   editCustomerAddress,
-  searchAddressById,
-} from "@/app/action/checkout/dbOperations";
+  searchAddressByUserId,
+} from "@/app/action/address/dbOperations";
 
 import { useSession } from "next-auth/react";
+type idT = {userId:string}
+type addressResT ={
+  email:string;
+  firstName:string;
+  lastName:string;
+ // userId:string;
+  mobNo:string;
+  addressLine1:string;
+  addressLine2:string;
+  city:string;
+  state:string;
+  zipCode:string;
+} 
 
 const EditForm = () => {
   const { data: session } = useSession();//, status
   //useEffect(() => {}, [session]);
    useEffect(()=>{
-    async function getUserDataById(userId:{userId:string}) {
+    async function getUserDataById(userId:string) {
       console.log("addressRes", userId);
-    const  addressRes = (await searchAddressById(userId)) ;
+    const  addressRes = await searchAddressByUserId(userId) ;
    
       if (addressRes !== null) {
-        console.log("++++++++++++++", userId)
+      //  console.log("++++++++++++++", userId)
         setValue("email", addressRes.email);
-        setValue("firstName", addressRes.firstName);
-        setValue("lastName", addressRes.lastName);
-        setValue("userId", userId);
+        setValue("firstName", addressRes.firstName!);
+        setValue("lastName", addressRes.lastName!);
+       // setValue("userId", userId);
         // setValue("email", addressRes.email);
-        setValue("mobNo", addressRes.mobNo);
-        setValue("addressLine1", addressRes.addressLine1);
-        setValue("addressLine2", addressRes.addressLine2);
-        setValue("city", addressRes.city);
-        setValue("state", addressRes.state);
-        setValue("zipCode", addressRes.zipCode);
+        setValue("mobNo", addressRes.mobNo!);
+        setValue("addressLine1", addressRes.addressLine1!);
+        setValue("addressLine2", addressRes.addressLine2!);
+        setValue("city", addressRes.city!);
+        setValue("state", addressRes.state!);
+        setValue("zipCode", addressRes.zipCode!);
       } 
   }  
    if(session?.user?.id !== undefined){
-  getUserDataById(session?.user?.id)
+    const idU: string = session?.user?.id;
+  getUserDataById(idU)
   }  
-  },[session])
+  },[])//session // give error when put in dependency
 
 
     const {
@@ -55,18 +69,21 @@ const EditForm = () => {
 
   //setValue("userId", session?.user?.id);
 
+
+ 
+
   async function onSubmit(data: TaddressSchemaCheckout) {
-  console.log("onsubmit -------------",data)
+//  console.log("onsubmit -------------",data)
     const formData = new FormData();
 
     formData.append("firstName", data.firstName);
     formData.append("lastName", data.lastName);
-    formData.append("userId", data.userId);
+    formData.append("userId", data.userId!);
     formData.append("email", data.email);
     formData.append("mobNo", data.mobNo);
-    formData.append("password", data.password);
-    formData.append("addressLine1", data.addressLine1);
-    formData.append("addressLine2", data.addressLine2);
+    formData.append("password", data.password!);
+    formData.append("addressLine1", data.addressLine1!);
+    formData.append("addressLine2", data.addressLine2!);
     formData.append("city", data.city);
     formData.append("state", data.state);
     formData.append("zipCode", data.zipCode);

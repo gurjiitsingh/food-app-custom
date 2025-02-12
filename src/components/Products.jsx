@@ -132,7 +132,7 @@ export function ProductCard({ product }) {
         </h2>
       </div>
       <p className="text-xs text-gray-500 line-clamp-2">
-        {product?.Desc}
+        {product?.productDesc}
       </p>
       <Suspense>
         {/* <RatingReview product={product} /> */}

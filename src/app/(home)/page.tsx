@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero"
-import Slider from "@/components/Slider";
+//import Slider from "@/components/Slider";
 import HowOrder from "@/components/HowOrder"
 import Footer from "@/components/Footer";
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
     <div className="overflow-hidden">
   
     <Hero />
-    <Slider />
+    {/* <Slider /> */}
     <HowOrder />    
     <Footer />
     </div>

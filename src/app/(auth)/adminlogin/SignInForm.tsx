@@ -31,18 +31,18 @@ const response  = await signIn('credentials', loginData);
 
 console.log("in form ",response)
 
-if(!response?.error){
-  console.log("login--------")
- if(response?.role === 'admin'){
-  router.push('/admin');
- } 
- if(response?.role === 'user'){
-  router.push('/user');
- } 
-// router.push('/');
-// router.refresh();
+// if(!response?.error){
+//   console.log("login--------")
+//  if(response?.role === 'admin'){
+//   router.push('/admin');
+//  } 
+//  if(response?.role === 'user'){
+//   router.push('/user');
+//  } 
+// // router.push('/');
+// // router.refresh();
 
-}
+// }
 
 }
 

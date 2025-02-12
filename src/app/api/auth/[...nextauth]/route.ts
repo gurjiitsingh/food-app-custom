@@ -106,32 +106,27 @@ const handler = NextAuth({
       else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
-    async jwt({ token, user, session }:any) {
-    //  console.log("in jwt --------",user,"session--------", session,"token ----- ",token )
-     // call stack 1
-      // you can get user values from databas directly here
-      if (user) {
-       // User is available during sign-in
-       // can take value from user to assing to token
-        return {
+    async jwt({ token, user }:any) {
+         if (user) {
+             return {
           id: user.id,
           name: user.name,
-          role: user.role,
+         // role: user.role,
           email: user.email,
           picture: user.image,
         };
       }
       return token;
     },
-    async session({ session, token }:any) {
+    async session({ session, token }) {
       // call stack 2
      //token pocess all values, assign value to session
      
-      session.user.id = token.id;
-      session.user.name = token.name;
-      session.user.email = token.email;
-      session.user.role = token.role;
-      session.user.image = token.picture;
+      // session.user.id = token.id;
+      // session.user.name = token.name;
+      // session.user.email = token.email;
+      // session.user.role = token.role;
+      // session.user.image = token.picture;
      // console.log("in session --------", session, token )
       return session;
     },

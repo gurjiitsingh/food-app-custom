@@ -1,9 +1,9 @@
 import RegisterForm from './RegisterForm';
 
-const page = () => {
+const Page = () => {
   return (
     <RegisterForm />
   )
 }
 
-export default page
+export default Page

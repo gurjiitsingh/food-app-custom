@@ -43,7 +43,7 @@ function addProductToCartNew(){
 
         <div className="text-xl font-semibold">Price ${item.price}</div>
         </div>
-        <div > {item.desc} </div>
+        <div > {item.productDesc} </div>
         {/* botom row */}
         <div className="flex flex-row justify-start ">
           <div className="flex justify-center items-center gap-2">

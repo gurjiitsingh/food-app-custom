@@ -2,13 +2,15 @@
 import React from 'react'
 import { useCartContext } from '@/store/CartContext';
 import { IoMdAdd } from 'react-icons/io';
+//import { ProductType } from '@/lib/types/productType';
+import { cartDataT } from '@/lib/types/cartDataType';
 
-export  function ButtonAddToCartButton({product}) {
+export  function ButtonAddToCartButton({product}:{product:cartDataT}) {
 
  
   const ctx = useCartContext();
 
-  function addItemToCart(product){
+  function addItemToCart(product:cartDataT){
     //console.log("ljkklklk", product)
   
    // ctx.addProduct(product);

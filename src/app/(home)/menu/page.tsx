@@ -2,25 +2,26 @@
 import { fetchProducts } from '@/app/action/products/dbOperation';
 import React, { useEffect, useState } from 'react'
 import PageProductDetailComponent from './components/PageProductDetailComponent';
-import { CartProvider } from '@/store/CartProvider';
-import CartCount from '@/components/CartCount';
-import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-//import { Sidebar } from '@/components/Sidebar';
-//import { Sidebar } from '@/components/SidebarFramer';
+import {  ProductTypeArr } from '@/lib/types/productType';
+import { cartDataT } from '@/lib/types/cartDataType';
 
-export default function page() {
+//import { TnewProductSchema } from '@/lib/types';
+// import {  TnewProductSchema } from '@/lib/type/productType';
+
+
+export default function Page() {
 
    // const products = await fetchProducts();
-   const [products, setProduct] = useState([]);
+   const [products, setProduct] = useState<cartDataT[]>([]);
 
    useEffect(() => {
-     async function fetchProductPics() {
-       const productPics = await fetchProducts();
+     async function fetchproductData() {
+       const productData = await fetchProducts();
     
-       setProduct(productPics);
+       setProduct(productData);
      }
-     fetchProductPics();
+     fetchproductData();
    }, []);
 
   return (<>

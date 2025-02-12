@@ -1,6 +1,6 @@
 
 
-const page = () => {
+const Page = () => {
   return (
     <div className='w-[100%] h-screen flex flex-col bg-slate-100'>
      
@@ -8,4 +8,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

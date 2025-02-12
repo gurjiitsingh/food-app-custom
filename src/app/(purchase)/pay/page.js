@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 //import './Checkout.css';
 import {
   PayPalButtons,
@@ -8,7 +8,6 @@ import {
 } from "@paypal/react-paypal-js";
 import { loadScript } from "@paypal/paypal-js";
 import { useRouter } from "next/navigation";
-import { useCartContext } from "@/store/CartContext";
 
 loadScript({
   "client-id": process.env.PAYPAL_CLIENT_KEY,
@@ -23,25 +22,26 @@ loadScript({
 
 const Checkout = () => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-  const [currency, setCurrency] = useState(options.currency);
+  //const [currency, setCurrency] = useState(options.currency);
   const router = useRouter();
-  const { cartData, productTotalCost } = useCartContext();
+  //const { cartData, productTotalCost } = useCartContext();
 
-  const onCurrencyChange = ({ target: { value } }) => {
-    setCurrency(value);
-    dispatch({
-      type: "resetOptions",
-      value: {
-        ...options,
-        currency: value,
-      },
-    });
-  };
+  // const onCurrencyChange = ({ target: { value } }) => {
+  //   setCurrency(value);
+  //   dispatch({
+  //     type: "resetOptions",
+  //     value: {
+  //       ...options,
+  //       currency: value,
+  //     },
+  //   });
+  // };
 
-  var products =  JSON.parse(localStorage.getItem("cart_product_data"));
+  //var products =  JSON.parse(window.localStorage.getItem("cart_product_data"));
+  if (typeof window !== 'undefined') {
   var customerAddress = JSON.parse(localStorage.getItem("customer_address"))
-  
-console.log("cartData ", productTotalCost)
+  }
+//console.log("cartData ", productTotalCost)
   const onCreateOrder = (data, actions) => {
     return actions.order.create({
       intent: "CAPTURE",

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import ProductList from "@/components/Cart/productList";
 import CartContext from "@/store/CartContext";
-import Link from "next/link";
+
 
 const CartContent = () => {
   const { cartData } = useContext(CartContext);

@@ -41,7 +41,7 @@ const ProductList = ({ item }) => {
 
           <div className="text-[1rem] w-[13%] flex items-start justify-end "> &euro;{item.price}</div>
         </div>
-        <div> {item.desc} </div>
+        <div> {item.productDesc} </div>
 
         <div className="flex flex-row justify-between ">
           <div className="flex justify-between items-center gap-2 ">

@@ -4,9 +4,7 @@ type productTableProps = {
   limit?: number;
   title?: string;
 };
-import { TProduct } from "@/types/products";
-
-
+import { TOrderMaster, TOrderProduct } from "@/lib/types";
 import React, { useEffect, useState } from "react";
 import {
   Table,
@@ -21,33 +19,27 @@ import {
 //import { Button } from "../ui/button";
 
 import TableRows from "./TableRows";
-import { fetchOrdersMasterByUserId, fetchOrdersMaster } from "@/app/action/orders/dbOperations";
+import { fetchOrdersMasterByUserId } from "@/app/action/orders/dbOperations";
 import { useSession } from "next-auth/react";
 
 //import FeaturProductUpdate from "./FeaturProductUpdate";
 
 const ListView = ({ title }: productTableProps) => {
-  const [orderData, setOrderData] = useState([]);
+  const [orderData, setOrderData] = useState<Array<TOrderMaster>>([]);
   const { data: session } = useSession();//, status
-var pageNo = 1;
-var limit = 10
+// var pageNo = 1;
+// var limit = 10
 
   useEffect(() => {
-    // if(session?.user?.id !== undefined){
-    //   getUserDataById(session?.user?.id)
-    //   }  
-    //   },[session])
-
-    async function fetchOrder(): Promise<any>{
-
-console.log("user id -----", session?.user?.id)
-
+ 
+ async function fetchOrder(){
       
       try {
-
-      //  const result = await fetchOrdersMasterByUserId(session?.user?.id)
-      const result = await fetchOrdersMaster();
+        if(session?.user?.id !== undefined){
+        const idUser: string = session?.user?.id;
+        const result = await fetchOrdersMasterByUserId(idUser);
         setOrderData(result)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -58,14 +50,16 @@ console.log("user id -----", session?.user?.id)
   }, [session]);
 
 
-  function handleDelete(id:string){
-    console.log(id)
-  }
+  // function handleDelete(id:string){
+  //   console.log(id)
+  // }
   // Sort posts in dec product based on date
 
 //   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
 //     return new Date(b.date).getTime() - new Date(a.date).getTime();
 //   });
+
+
 
   return (
     <>
@@ -78,7 +72,7 @@ console.log("user id -----", session?.user?.id)
           {/* <TableCaption>Product List</TableCaption> */}
           <TableHeader>
             <TableRow>
-              <TableHead className="hidden md:table-cell">Order</TableHead>
+              <TableHead className="hidden md:table-cell">Order1</TableHead>
               <TableHead className="hidden md:table-cell">Date</TableHead>
               <TableHead className="hidden md:table-cell">Status</TableHead>
              
@@ -87,9 +81,9 @@ console.log("user id -----", session?.user?.id)
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orderData.map((order: TProduct) => {
+            {orderData.map((order: TOrderMaster) => {
               return (
-                <TableRows key={order.id} order={order} />
+                <TableRows key={order?.id} order={order} />
               );
             })}
           </TableBody>

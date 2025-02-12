@@ -4,12 +4,13 @@ import { NextResponse, NextRequest } from 'next/server';
 
 export async function GET(){
    
-        const result = await db.select().from(category)
-        console.log(result)
-        return NextResponse.json({
-            status: "success",
-            data: { category: result },
-        });
+        // const result = await db.select().from(category)
+        // console.log(result)
+        // return NextResponse.json({
+        //     status: "success",
+        //     data: { category: result },
+        // });
+        return NextResponse.json({"ok":"kk"});
 }
 
 

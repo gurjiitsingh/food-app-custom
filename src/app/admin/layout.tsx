@@ -3,7 +3,7 @@ import Sidebar from "@/app/admin/components/Sidebar";
 import Header from "@/app/admin/components/Header";
 import React, { useEffect, useRef, useState } from "react";
 import "../globals.css";
-import { Metadata } from "next";
+//import { Metadata } from "next";
 import { usePathname } from "next/navigation";
 
 // export const metadata = {
@@ -29,14 +29,14 @@ export default function RootLayout({
 
 
   useEffect(()=>{
-    function handleClickedOutSideSidebar(event){
-      alert("works")
-      if(sidebarRef.current && !sidebarRef?.current?.contains(event.target)){
-        setIsOpen(false);
-      }
-      document.addEventListener("mousedown", handleClickedOutSideSidebar);
-      return () => document.removeEventListener("mousedown", handleClickedOutSideSidebar)
-    }
+    // function handleClickedOutSideSidebar(event){
+    //   alert("works")
+    //   if(sidebarRef.current && !sidebarRef?.current?.contains(event.target)){
+    //     setIsOpen(false);
+    //   }
+    //   document.addEventListener("mousedown", handleClickedOutSideSidebar);
+    //   return () => document.removeEventListener("mousedown", handleClickedOutSideSidebar)
+    // }
 
 
   },[])

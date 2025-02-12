@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect } from 'react'
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editCategorySchema, TeditCategorySchema } from "@/lib/types";
-import { editCategory } from "@/app/action/category/dbOperations";
+//import { editCategory } from "@/app/action/category/dbOperations";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -20,7 +20,7 @@ const Form = () => {
 const searchParams = useSearchParams();
 const id = searchParams.get('id')
 const name = searchParams.get('name')
-const desc = searchParams.get('desc')
+const desc = searchParams.get('productDesc')
 const slug = searchParams.get('slug')
 
     const [imageSelected, setImageSelected] = useState(null);
@@ -40,22 +40,22 @@ const slug = searchParams.get('slug')
   
     const {
       register,
-      formState: { errors, isSubmitting },
+      formState: { errors },
       handleSubmit,
       setValue,
-      reset,
-      getValues,
-      setError,
+     // reset,
+     // getValues,
+     // setError,
     } = useForm<TeditCategorySchema>({
       resolver: zodResolver(editCategorySchema),
     });
 
     useEffect(() => {
      // if (userData) {
-     setValue('id', id);
-     setValue('name', name);
-     setValue('desc', desc);
-     setValue('slug', slug);
+     setValue('id', id!);
+     setValue('name', name!);
+     setValue('productDesc', desc!);
+     setValue('slug', slug!);
     //  }
   }, [id,name,desc,slug]);
    // const { isSubmitting } = formState;
@@ -67,37 +67,37 @@ const slug = searchParams.get('slug')
   
       formData.append("id", data.id);
       formData.append("name", data.name);
-      formData.append("desc", data.desc);
+      formData.append("productDesc", data.productDesc);
       formData.append("slug", data.slug);
       formData.append("image", data.image[0]);
       //  console.log(formData.get('checkbox'));
   
-       const result = await editCategory(formData);
+     //  const result = await editCategory(formData);
       //const result = JSON.parse(res)
+    // const  result ={};
+    //   if (result.errors) {
+    //     // not network error but data validation error
+    //     const errors: Terror = result.errors;
   
-      if (result.errors) {
-        // not network error but data validation error
-        const errors: Terror = result.errors;
-  
-        if (errors.name) {
-          setError("name", {
-            type: "server",
-            message: errors.name,
-          });
-        } else if (errors.desc) {
-          setError("desc", {
-            type: "server",
-            message: errors.desc,
-          });
-        } else if (errors.slug) {
-          setError("slug", {
-            type: "server",
-            message: errors.slug,
-          });
-        } else {
-            alert("Something went wrong");
-        }
-      }
+    //     if (errors.name) {
+    //       setError("name", {
+    //         type: "server",
+    //         message: errors.name,
+    //       });
+    //     } else if (errors.productDesc) {
+    //       setError("productDesc", {
+    //         type: "server",
+    //         message: errors.productDesc,
+    //       });
+    //     } else if (errors.slug) {
+    //       setError("slug", {
+    //         type: "server",
+    //         message: errors.slug,
+    //       });
+    //     } else {
+    //         alert("Something went wrong");
+    //     }
+    //   }
       
       setIsDisabled(false)
       router.push('/admin/categories')
@@ -129,9 +129,9 @@ const slug = searchParams.get('slug')
 
       <div className="flex flex-col gap-1">
         <label className="label-style">Description<span className="text-red-500">*</span>{" "}</label>
-        <input {...register("desc")} className="input-style" />
+        <input {...register("productDesc")} className="input-style" />
         <span className="text-[0.8rem] font-medium text-destructive">
-          {errors.desc?.message && <span>{errors.desc?.message}</span>}
+          {errors.productDesc?.message && <span>{errors.productDesc?.message}</span>}
         </span>
       </div>
 

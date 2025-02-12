@@ -1,13 +1,14 @@
 'use client'
 import React from 'react'
 import { useCartContext } from '@/store/CartContext';
+import { cartDataT } from '@/lib/types/cartDataType';
 
-export default function RemoveFromCartButton({product}) {
+export default function RemoveFromCartButton({product}:{product:cartDataT}) {
 
  
   const ctx = useCartContext();
 
-  function removeItemToCart(product){
+  function removeItemToCart(product:cartDataT){
     //console.log("ljkklklk", product)
   
    // ctx.addProduct(product);

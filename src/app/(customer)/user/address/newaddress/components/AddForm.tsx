@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addressSchimaCheckout, TaddressSchemaCheckout } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 //import { useSearchParams } from "next/navigation";
-import { newCustomerAddress, searchUserById, } from "@/app/action/checkout/dbOperations";
+import { newCustomerAddress } from "@/app/action/checkout/dbOperations";
+import {  searchUserById, } from "@/app/action/user/dbOperation";
 
 import { useSession } from "next-auth/react";
 
@@ -13,29 +14,31 @@ const AddForm = () => {
   const { data: session } = useSession();//, status
   
    useEffect(()=>{
-      async function getUserDataById(userId:{userId:string}) {
+      async function getUserDataById(userId:string) {
         console.log("addressRes", userId);
-      const  userRes = (await searchUserById(userId)) ;
+      const  userRes = await searchUserById(userId) ;
      
         if (userRes !== null) {
-          console.log("++++++++++++++", userId)
+       
           setValue("email", userRes.email);
-          // setValue("firstName", addressRes.firstName);
-          // setValue("lastName", addressRes.lastName);
-          // setValue("userId", userId);
-          // // setValue("email", addressRes.email);
-          // setValue("mobNo", addressRes.mobNo);
-          // setValue("addressLine1", addressRes.addressLine1);
-          // setValue("addressLine2", addressRes.addressLine2);
-          // setValue("city", addressRes.city);
-          // setValue("state", addressRes.state);
-          // setValue("zipCode", addressRes.zipCode);
+        //  setValue("firstName", addressRes.firstName);
+         // setValue("lastName", addressRes.lastName);
+          setValue("userId", userId);
+          // setValue("email", addressRes.email);
+       //   setValue("mobNo", addressRes.mobNo);
+       //   setValue("addressLine1", addressRes.addressLine1);
+        //  setValue("addressLine2", addressRes.addressLine2);
+        //  setValue("city", addressRes.city);
+        //  setValue("state", addressRes.state);
+       //   setValue("zipCode", addressRes.zipCode);
         } 
     }  
+    
      if(session?.user?.id !== undefined){
-      getUserDataById(session?.user?.id)
+      const idUser: string = session?.user?.id;
+      getUserDataById(idUser)
     }  
-    },[session])
+    },[])//session
 
 
     const {
@@ -58,12 +61,12 @@ const AddForm = () => {
 
     formData.append("firstName", data.firstName);
     formData.append("lastName", data.lastName);
-    formData.append("userId", data.userId);
+    formData.append("userId", data.userId!);
     formData.append("email", data.email);
     formData.append("mobNo", data.mobNo);
-    formData.append("password", data.password);
-    formData.append("addressLine1", data.addressLine1);
-    formData.append("addressLine2", data.addressLine2);
+    formData.append("password", data.password!);
+    formData.append("addressLine1", data.addressLine1!);
+    formData.append("addressLine2", data.addressLine2!);
     formData.append("city", data.city);
     formData.append("state", data.state);
     formData.append("zipCode", data.zipCode);

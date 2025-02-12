@@ -3,7 +3,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addUser } from "@/app/action/checkout/dbOperations";
 import { signUpSchema, TsignUpSchema } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
@@ -32,7 +31,7 @@ const RegisterForm = () => {
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
 
-    const result = await addUser(formData);
+   // const result = await addUser(formData);
 
     // const response = await fetch("/api/auth/signup", {
     //   method: "POST",

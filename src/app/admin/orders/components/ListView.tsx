@@ -4,8 +4,6 @@ type productTableProps = {
   limit?: number;
   title?: string;
 };
-import { TProduct } from "@/types/products";
-
 
 import React, { useEffect, useState } from "react";
 import {
@@ -18,19 +16,20 @@ import {
   //TableCaption,
 } from "@/components/ui/table";
 
-//import { Button } from "../ui/button";
 
 import TableRows from "./TableRows";
 import { fetchOrdersMaster } from "@/app/action/orders/dbOperations";
+import { orderMasterDataTArr } from "@/lib/types";
 //import FeaturProductUpdate from "./FeaturProductUpdate";
 
 const ListView = ({ title }: productTableProps) => {
-  const [orderData, setOrderData] = useState([]);
-var pageNo = 1;
-var limit = 10
+  const [orderData, setOrderData] = useState<orderMasterDataTArr>();
+// var pageNo = 1;
+// var limit = 10
 
   useEffect(() => {
-    async function fetchOrder(): Promise<any>{
+    //async function fetchOrder(): Promise<TOrderProduct>{
+    async function fetchOrder(){
 
 
       try {
@@ -47,15 +46,13 @@ var limit = 10
   }, []);
 
 
-  function handleDelete(id:string){
-    console.log(id)
-  }
+
   // Sort posts in dec product based on date
 
 //   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
 //     return new Date(b.date).getTime() - new Date(a.date).getTime();
 //   });
-
+//console.log("----------------- o----------------",orderData)
   return (
     <>
       <div className="mt-10 p-2">
@@ -76,9 +73,9 @@ var limit = 10
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orderData.map((order: TProduct) => {
+            {orderData?.map((order) => {
               return (
-                <TableRows key={order.id} order={order} />
+                <TableRows key={order.userId} order={order} />
               );
             })}
           </TableBody>

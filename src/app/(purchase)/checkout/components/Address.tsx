@@ -2,24 +2,81 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form"; //, Controller
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addressSchimaCheckout, TaddressSchemaCheckout } from "@/lib/types";
+import { addressResT, addressSchimaCheckout,  TaddressSchemaCheckout } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 //import { useSearchParams } from "next/navigation";
 import {
-  cartToOrderProducts,
-  searchAddress,
-} from "@/app/action/checkout/dbOperations";
+  searchAddressEmail,
+  searchAddressByUserId,
+} from "@/app/action/address/dbOperations";
 import { useRouter } from "next/navigation";
 // import { resolve } from "path";
  import { useSession } from "next-auth/react";
 import CartContext from "@/store/CartContext";
+import { searchUserById } from "@/app/action/user/dbOperation";
+import { createNewOrder } from "@/app/action/orders/dbOperations";
+import { purchaseDataT } from "@/lib/types/cartDataType";
 
 const Address = () => {
   const { cartData } = useContext(CartContext);
   const { data: session } = useSession();
   const [addressFound, setAddressFound] = useState(false);
   const router = useRouter();
+
+
+  useEffect(()=>{
+async function getAddressByID(){
+  if(session?.user?.id !== undefined){
+ 
+    const custAddressRes = (await searchAddressByUserId(session?.user.id)) || {};
+   // console.log("custAddressRes --- fetched ",custAddressRes);
+   //    console.log("custAddressRes --- fetched ",custAddressRes.email);
+    let setemail;
+     if (custAddressRes.email !== undefined) {
+    
+      setAddressFound(true)
+     
+       setAddress(custAddressRes,setemail=true)
+     }else{
+      const custAddressResById = await searchUserById(session?.user?.id);
+      if(custAddressResById !== undefined) {
+    //     if(setemail)setValue("email", addressRes.email);
+    // setValue("firstName", addressRes.firstName);
+    // setValue("lastName", addressRes.lastName);
+    // // setValue("userId", addressRes.userId);
+    // // setValue("email", addressRes.email);
+    // setValue("mobNo", addressRes.mobNo);
+    // setValue("addressLine1", addressRes.addressLine1);
+    // setValue("addressLine2", addressRes.addressLine2);
+    // setValue("city", addressRes.city);
+    // setValue("state", addressRes.state);
+    // setValue("zipCode", addressRes.zipCode);
+      }
+     }
+   
+  }
+}
+getAddressByID();
+  },[session])
+
+
+  async function handleEmailChange(e: React.ChangeEvent<HTMLInputElement >) {
+    const inputEmail:string = e.target.value;
+    let addressRes = null;
+    if (!addressFound) {
+      if (inputEmail.length > 7) {
+        addressRes = await searchAddressEmail(inputEmail);
+        //  console.log(addressRes);
+        if (addressRes !== null) {
+          let setemail = false;
+          setAddress(addressRes, setemail=false)
+        }
+      }
+    }
+
+    // console.log("address res", addressRes);
+  }
   
 
   const {
@@ -34,19 +91,18 @@ const Address = () => {
     resolver: zodResolver(addressSchimaCheckout),
   });
 
-  //setValue("userId", session?.user?.id);
-
+ 
   async function onSubmit(data: TaddressSchemaCheckout) {
     const formData = new FormData();
     
     formData.append("firstName", data.firstName);
     formData.append("lastName", data.lastName);
-    formData.append("userId", data.userId);
+    formData.append("userId", data.userId!);
     formData.append("email", data.email);
     formData.append("mobNo", data.mobNo);
-    formData.append("password", data.password);
-    formData.append("addressLine1", data.addressLine1);
-    formData.append("addressLine2", data.addressLine2);
+    formData.append("password", data.password!);
+    formData.append("addressLine1", data.addressLine1!);
+    formData.append("addressLine2", data.addressLine2!);
     formData.append("city", data.city);
     formData.append("state", data.state);
     formData.append("zipCode", data.zipCode);
@@ -63,57 +119,52 @@ const Address = () => {
       state: data.state,
       zipCode: data.zipCode,
     };
+    if (typeof window !== 'undefined') {
     localStorage.setItem("customer_address", JSON.stringify(customAddress));
-
+    }
     //await addCustomerAddress(formData);
-
+ 
     const purchaseData = {
-      userId: session?.user.id,
+      userId: session?.user?.id,
      cartData,
      address:customAddress,
-    };
+    } as purchaseDataT;
     if (cartData.length !== 0) {
-      await cartToOrderProducts(purchaseData);
+      await createNewOrder(purchaseData);
     }
     router.push("/pay");
   }
 
-  setValue("firstName", "Gurjit");
-  setValue("lastName", "Singh");
-  setValue("userId", session?.user.id);
+  setValue("userId", session?.user?.id);
   //setValue("email", "g@mail.com");
-  setValue("mobNo", "9838883323");
-  setValue("addressLine1", "345 street House 34");
-  setValue("addressLine1", "Vill Tandi Aulakh");
-  setValue("city", "Jal");
-  setValue("state", "Punjab");
-  setValue("zipCode", "144621");
+  // setValue("firstName", "Gurjit");
+  // setValue("lastName", "Singh");
+  // setValue("mobNo", "9838883323");
+  // setValue("addressLine1", "345 street House 34");
+  // setValue("addressLine1", "Vill Tandi Aulakh");
+  // setValue("city", "Jal");
+  // setValue("state", "Punjab");
+  // setValue("zipCode", "144621");
   //setValue("orderDetail", cartData);
 
-  async function handleEmailChange(e) {
-    const inputEmail = e.target.value;
-    let addressRes = null;
-    if (!addressFound) {
-      if (inputEmail.length > 7) {
-        addressRes = (await searchAddress(inputEmail)) || {};
-        //  console.log(addressRes);
-        if (addressRes !== null) {
-          setAddressFound(true);
-          setValue("firstName", addressRes.firstName);
-          setValue("lastName", addressRes.lastName);
-          // setValue("userId", addressRes.userId);
-          // setValue("email", addressRes.email);
-          setValue("mobNo", addressRes.mobNo);
-          setValue("addressLine1", addressRes.addressLine1);
-          setValue("addressLine2", addressRes.addressLine2);
-          setValue("city", addressRes.city);
-          setValue("state", addressRes.state);
-          setValue("zipCode", addressRes.zipCode);
-        }
-      }
-    }
 
-    // console.log("address res", addressRes);
+
+
+
+function setAddress(addressRes:addressResT, setemail:boolean){
+  //console.log("inside set address ---", setemail,addressRes)
+    setAddressFound(true);
+    if(setemail)setValue("email", addressRes.email);
+    setValue("firstName", addressRes.firstName);
+    setValue("lastName", addressRes.lastName);
+    // setValue("userId", addressRes.userId);
+    // setValue("email", addressRes.email);
+    setValue("mobNo", addressRes.mobNo);
+    setValue("addressLine1", addressRes.addressLine1);
+    setValue("addressLine2", addressRes.addressLine2);
+    setValue("city", addressRes.city);
+    setValue("state", addressRes.state);
+    setValue("zipCode", addressRes.zipCode);
   }
 
   return (
@@ -121,7 +172,7 @@ const Address = () => {
       <div className="flex flex-col">
         <div className="flex flex-col gap-2 mb-4">
           <h2 className="text-5 text-slate-600 font-semibold py-3">
-            Shipping address -- {session?.user.id} --- {session?.user.name}
+            Shipping address -- {session?.user?.id} --- {session?.user?.name}
           </h2>
           <p className="text-sm">
             Enter the address where you want your order delivered.

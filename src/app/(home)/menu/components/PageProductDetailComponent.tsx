@@ -2,12 +2,21 @@
 import { ButtonAddToCartButton } from "@/components/CartPageComponent/ButtonAddToCart";
 import { ButtonDecCartProduct } from "@/components/CartPageComponent/ButtonDecCartProduct";
 import { ItemTotal } from "@/components/CartPageComponent/ItemTotal";
-import { CartProvider } from "@/store/CartProvider";
+import { cartDataT } from "@/lib/types/cartDataType";
+//import { TnewProductSchema } from "@/lib/types";
+//import {  ProductType } from "@/lib/types/productType";
 import Link from "next/link";
 import React from "react";
 
-export default function PageProductDetailComponent({ product }:{product:any}) {
 
+
+
+
+
+
+
+export default function PageProductDetailComponent({ product }:{product:cartDataT}) {
+console.log("----------product data----", product)
   return (
     <div className="w-full md:w-[49%] lg:w-[32%] bg-white flex flex-row border  rounded-2xl">
       <Link
@@ -28,7 +37,7 @@ export default function PageProductDetailComponent({ product }:{product:any}) {
           <div>
           <ButtonDecCartProduct product={product} />
           </div>
-          <div className="flex items-center h-full  justify-center w-4"><ItemTotal productId={product.id} /></div>
+          <div className="flex items-center h-full  justify-center w-4"><ItemTotal productId={product.id!} /></div>
           
           <div>
           <ButtonAddToCartButton product={product} />

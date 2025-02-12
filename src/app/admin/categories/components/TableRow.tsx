@@ -1,34 +1,35 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import {
-  Table,
-  TableBody,
+  // Table,
+  // TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
+  // TableHead,
+  // TableHeader,
   TableRow,
-  TableCaption,
+  // TableCaption,
 } from "@/components/ui/table";
-import { deleteCategory } from "@/app/action/category/fetchCategories";
+//import { deleteCategory } from "@/app/action/category/dbOperations";
 import { MdDeleteForever } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
-export default function TableRows({ item, deleteItem  }) {
+import { categoryType } from "@/lib/types/categoryType";
+export default function TableRows({ item }:{item:categoryType}) {
 
     
-  const router = useRouter();
+  //const router = useRouter();
   async function handleDelete() {
 
     if (!confirm("Are you sure?")) return;
 
-    await deleteCategory(JSON.stringify({id:item.id}));
+   // await deleteCategory(JSON.stringify({id:item.id}));
    
   }
 
-async function handleUpdate(){
- // changeForm()
-}
+// async function handleUpdate(){
+//  // changeForm()
+// }
 
 
   return (
@@ -37,7 +38,7 @@ async function handleUpdate(){
         <TableCell>{item.name}</TableCell>
         <TableCell>{item.desc}</TableCell>
         <TableCell>
-          <img src={item.imgUrl} width={100} height={100} alt={item.name} />
+          <img src={item.image} width={100} height={100} alt={item.name} />
         </TableCell>
 
         <TableCell>{/* <FeaturitemUpdate /> */}</TableCell>
@@ -50,7 +51,6 @@ async function handleUpdate(){
             query: {
               id:item.id,
                name:item.name,
-               slug:item.slug,
                desc:item.desc,
                
             },

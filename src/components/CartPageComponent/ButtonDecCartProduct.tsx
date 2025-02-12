@@ -1,16 +1,16 @@
 'use client'
 import React from 'react'
-import { useCartContext } from '@/store/CartContext';
 import { IoMdRemove } from 'react-icons/io';
+import { cartDataT } from '@/lib/types/cartDataType';
+import { useCartContext } from '@/store/CartContext';
 
 
-export  function ButtonDecCartProduct({product}) {
+export  function ButtonDecCartProduct({product}:{product:cartDataT}) {
 
-  const { addProductToCart, decCartProduct, decCartProductAll, removeCartProduct } =  useCartContext();
+  const {  removeCartProduct } =  useCartContext();
 
-  const ctx = useCartContext();
-
-  function decItemFromCart(product){
+  
+  function decItemFromCart(product:cartDataT){
     
     removeCartProduct(product)
     //decCartProductAll(product)

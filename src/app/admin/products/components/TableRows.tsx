@@ -1,33 +1,35 @@
 import {
-  Table,
-  TableBody,
+  //Table,
+  //TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
+  //TableHead,
+  //TableHeader,
   TableRow,
-  TableCaption,
+  //TableCaption,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+// import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
-import { CiEdit } from "react-icons/ci";
-import Image from "next/image";
-import { deleteProduct } from "@/app/action/products/dbOperation";
-import { useRouter  } from "next/navigation";
-function TableRows({ product }){
+// import { CiEdit } from "react-icons/ci";
+// import Image from "next/image";
 
-const router = useRouter();
+import { cartDataT } from "@/lib/types/cartDataType";
+//import { deleteProduct } from "@/app/action/products/dbOperation";
+//import { useRouter  } from "next/navigation";
+function TableRows({ product }:{product:cartDataT}){
 
- async function handleDelete(product) {
-    //console.log(product);
-  const result = await deleteProduct(product.id, product.image)
-if(result.errors){
-  alert(result.errors)
-}else{
-  // router.push('/admin/products')
-   //   router.refresh()
-      location.reload()
-}
+//const router = useRouter();
+
+ async function handleDelete(product:cartDataT) {
+   console.log(product);
+//  const result = await deleteProduct(product.id, product.image)
+// if(result.errors){
+//   alert(result.errors)
+// }else{
+//   // router.push('/admin/products')
+//    //   router.refresh()
+//       location.reload()
+// }
 
   }
 
@@ -37,20 +39,20 @@ if(result.errors){
       <TableCell>{product.price}</TableCell>
       <TableCell>
         <div className=" px-3 py-1 text-center ">
-          <Image
+          {/* <Image
             className="h-12 w-12 object-cover rounded-md border p-1"
             src={product.image}
             width={100}
             height={100}
             alt={product.name}
-          />
+          /> */}
         </div>
       </TableCell>
 
-      <TableCell>{product.category}</TableCell>
-      <TableCell>{product.brand}</TableCell>
+      <TableCell>{product.productCat}</TableCell>
+      <TableCell></TableCell>
       <TableCell>
-        {product?.title}{" "}
+       
         {product?.isFeatured === true && (
           <span className="ml-2 bg-gradient-to-tr from-blue-500 to-indigo-400 text-white text-[10px] rounded-full px-3 py-1">
             Featured
@@ -60,7 +62,7 @@ if(result.errors){
 
       <TableCell>
         <p className="flex gap-3">
-          <Link
+          {/* <Link
             href={{
               pathname: "/admin/products/editform",
               query: {
@@ -72,7 +74,7 @@ if(result.errors){
               {" "}
               <CiEdit size={20} className="text-white" />
             </Button>
-          </Link>
+          </Link> */}
           {/* <Button onClick={async () => {await deleteItem("foobar")}} className="p-1">  <CiEdit /></Button> */}
 
           <Button onClick={()=>handleDelete(product)} size="sm" className="bg-red-600 px-1 py-0 ">
