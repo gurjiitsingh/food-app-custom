@@ -15,7 +15,7 @@ import Link from 'next/link'
 import { sessionT } from '@/lib/types/sessionType';
 
 const LinkDropdown = ({session}:{session:sessionT}) => {
-  
+ 
   return (
     <DropdownMenu>
   <DropdownMenuTrigger>

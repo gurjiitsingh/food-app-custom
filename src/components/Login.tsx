@@ -3,7 +3,7 @@ import Link from "next/link";
 import LinkDropdown from "./LinkDropdown";
 
 export default function Login() {
-  const { data: session } = useSession();
+  const { data: session } = useSession(); 
 
   return (
     <>
@@ -22,8 +22,7 @@ export default function Login() {
           )}
           {/* {session&&  <Link href="/user">My Account</Link> } */}
           {!session && <Link href="/auth/register">Register</Link>}
-          {/* {session && <LinkDropdown session={session} />} */}
-          {/* {session && <LinkDropdown session={session} />} */}
+          {session && <LinkDropdown session={session} />}
         </div>
       </div>
     </>

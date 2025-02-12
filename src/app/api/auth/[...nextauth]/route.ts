@@ -43,7 +43,7 @@ const handler = NextAuth({
        // console.log(" email, password",  email, password)
       //  const User = await db.select().from(user).where(sql`${user.email} = ${email}`);
       //  const current_user = User[0];
-       console.log("-----------------inside NextAuth -----------------");
+     //  console.log("-----------------inside NextAuth -----------------");
 
          const collectionRef = collection(db, 'user')
             const targetQuery = query(collectionRef, where('email', '==', email), limit(1))
@@ -106,30 +106,35 @@ const handler = NextAuth({
       else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
-    async jwt({ token, user }:any) {
-         if (user) {
-             return {
-          id: user.id,
-          name: user.name,
-         // role: user.role,
-          email: user.email,
-          picture: user.image,
-        };
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      // call stack 2
-     //token pocess all values, assign value to session
-     
-      // session.user.id = token.id;
-      // session.user.name = token.name;
-      // session.user.email = token.email;
-      // session.user.role = token.role;
-      // session.user.image = token.picture;
-     // console.log("in session --------", session, token )
-      return session;
-    },
+    async jwt({ token, user, session }:any) {
+      //  console.log("in jwt --------",user,"session--------", session,"token ----- ",token )
+       // call stack 1
+        // you can get user values from databas directly here
+        if (user) {
+         // User is available during sign-in
+         // can take value from user to assing to token
+          return {
+            id: user.id,
+            name: user.name,
+            role: user.role,
+            email: user.email,
+            picture: user.image,
+          };
+        }
+        return token;
+      },
+      async session({ session, token }:any) {
+        // call stack 2
+       //token pocess all values, assign value to session
+       
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+        session.user.image = token.picture;
+      // console.log("in session --------", session, token )
+        return session;
+      },
   },
 });
 

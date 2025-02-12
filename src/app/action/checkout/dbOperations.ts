@@ -6,7 +6,7 @@ import { db } from "@/lib/firebaseConfig";
 import {
   addressSchimaCheckout,
   signUpSchema,
-  TsignUpSchema,
+ // TsignUpSchema,
 } from "@/lib/types";
 
 //import fs from "fs";
@@ -14,14 +14,14 @@ import {
 import {
   addDoc,
   collection,
-  deleteDoc,
-  doc,
+  //deleteDoc,
+  //doc,
   getDocs,
   query,
  // updateDoc,
   where,
 } from "@firebase/firestore";
-import { addOrderToMaster } from "../orders/dbOperations";
+
 
 //paypal
 //import { renderBuyPage } from "@/app/action/paypal/paypalActions"

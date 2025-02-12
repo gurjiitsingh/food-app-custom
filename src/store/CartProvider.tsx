@@ -87,7 +87,6 @@ export const CartProvider: React.FC<Props> = ({
   }
 
   function addProductToCart(newProduct: cartDataT) {
-console.log("----------- add to cart ",newProduct)
 
     const isItemInCart = cartData.find(
       (cartItem) => cartItem.id === newProduct.id

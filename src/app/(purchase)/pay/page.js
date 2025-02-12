@@ -8,6 +8,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { loadScript } from "@paypal/paypal-js";
 import { useRouter } from "next/navigation";
+import { useCartContext } from "@/store/CartContext";
 
 loadScript({
   "client-id": process.env.PAYPAL_CLIENT_KEY,
@@ -24,7 +25,7 @@ const Checkout = () => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   //const [currency, setCurrency] = useState(options.currency);
   const router = useRouter();
-  //const { cartData, productTotalCost } = useCartContext();
+  const {  productTotalCost } = useCartContext();
 
   // const onCurrencyChange = ({ target: { value } }) => {
   //   setCurrency(value);
@@ -100,7 +101,7 @@ const Checkout = () => {
     });
   };
 
-  return (
+  return (<div className="flex container mx-auto px-[30%] items-center justify-center my-[20%] ">
     <div className="checkout">
       {isPending ? (
         <p>LOADING...</p>
@@ -123,7 +124,7 @@ const Checkout = () => {
           />
         </>
       )}
-    </div>
+    </div></div>
   );
 };
 

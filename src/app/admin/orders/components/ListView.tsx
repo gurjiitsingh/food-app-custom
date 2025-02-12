@@ -19,40 +19,28 @@ import {
 
 import TableRows from "./TableRows";
 import { fetchOrdersMaster } from "@/app/action/orders/dbOperations";
-import { orderMasterDataTArr } from "@/lib/types";
+import { orderMasterDataT } from "@/lib/types";
 //import FeaturProductUpdate from "./FeaturProductUpdate";
 
 const ListView = ({ title }: productTableProps) => {
-  const [orderData, setOrderData] = useState<orderMasterDataTArr>();
+  const [orderData, setOrderData] = useState<orderMasterDataT[]>([]);
 // var pageNo = 1;
 // var limit = 10
 
   useEffect(() => {
     //async function fetchOrder(): Promise<TOrderProduct>{
     async function fetchOrder(){
-
-
       try {
-
         const result = await fetchOrdersMaster()
         setOrderData(result)
       } catch (error) {
         console.log(error)
-      }
-    
+      } 
    };
     fetchOrder();
   
   }, []);
-
-
-
-  // Sort posts in dec product based on date
-
-//   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
-//     return new Date(b.date).getTime() - new Date(a.date).getTime();
-//   });
-//console.log("----------------- o----------------",orderData)
+ 
   return (
     <>
       <div className="mt-10 p-2">
@@ -86,3 +74,9 @@ const ListView = ({ title }: productTableProps) => {
 };
 
 export default ListView;
+
+
+ // Sort posts in dec product based on date
+//   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
+//     return new Date(b.date).getTime() - new Date(a.date).getTime();
+//   });

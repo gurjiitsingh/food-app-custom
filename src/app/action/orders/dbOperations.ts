@@ -12,7 +12,7 @@ import { cartDataT, purchaseDataT } from "@/lib/types/cartDataType";
  
 
 export async function createNewOrder(purchaseData:purchaseDataT) {
-  //  console.log("--------------------- cart data in cart save draft  ",purchaseData.address)
+  //  console.log("--------------------- cart data in cart save draft  ",purchaseData)
   //1. user id
   //2. user address
   //3. cart data
@@ -23,7 +23,7 @@ export async function createNewOrder(purchaseData:purchaseDataT) {
   //const userId = purchaseData.address.userId;
  // const password = purchaseData.address.password;
  const password = "123456";
-  console.log("------- start order: email of the customer ----", email);
+ // console.log("------- start order: email of the customer ----", email);
 
   const username = firstName + "" + lastName;
   //if(purchaseData.userId === undefined){
@@ -50,13 +50,9 @@ export async function createNewOrder(purchaseData:purchaseDataT) {
   formDataAdd.append("zipCode", purchaseData.address.zipCode);
 
   const addressAddedId = await addCustomerAddressDirect(formDataAdd);
-
   // enter data in order master
 
-  
-
   const customerName = firstName + " " + lastName;
-
   const now = new Date();
   const now_india = now.toLocaleString("en-IN", {
     dateStyle: "medium",
@@ -69,12 +65,12 @@ export async function createNewOrder(purchaseData:purchaseDataT) {
     customerName,
     userId: UserAddedId,
     addressId: addressAddedId,
-    time: now_india,
-  } as orderMasterDataT;
+    //time: now_india,
+  } as orderMasterDataT; 
 
-  
+  //console.log("----------addOrderToMaster --", orderMasterData)
 
-  const orderMasterId = await addOrderToMaster(orderMasterData) as string;
+const orderMasterId = await addOrderToMaster(orderMasterData) as string;
 
   // add product to productOrder
 
@@ -92,17 +88,18 @@ export async function createNewOrder(purchaseData:purchaseDataT) {
 
 
 export async function addProductDraft(element:cartDataT, UserAddedId:string, orderMasterId:string) {
-  // console.log("UserAddedId in add products ----",  UserAddedId)
+   
   const product = {
     id: element.id,
     name: element.name,
     price: element.price,
     quantity: element.quantity,
     orderMasterId,
-    purchaseSession: element.purchaseSession,
+    //purchaseSession: element.purchaseSession,
     userId: UserAddedId,
     status: element.status,
   };
+ // console.log("UserAddedId in add products ----",  product)
   try {
     const docRef = await addDoc(collection(db, "orderProducts"), product);
     console.log("purchased product document written with ID: ", docRef.id);
@@ -116,14 +113,25 @@ export async function addProductDraft(element:cartDataT, UserAddedId:string, ord
 
 
 export async function addOrderToMaster(element:orderMasterDataT) {
-    try {
-      const docRef = await addDoc(collection(db, "orderMaster"), element);
-      console.log("Document written with ID: ", docRef.id);
-      return docRef.id;
+  let userDocRef = "" as string;
+  let recordId = undefined;
+ try {
+      userDocRef = (await addDoc(collection(db, "orderMaster"), element)).id ;
+      recordId = userDocRef;
+      return userDocRef;
       // Clear the form
-    } catch (e) { 
+    } catch (e) {
       console.error("Error adding document: ", e);
     }
+  
+    // try {
+    //   const docRef = await addDoc(collection(db, "orderMaster"), element1);
+    //   console.log("Document written with ID: ", docRef.id);
+    //   return docRef.id;
+    //   // Clear the form
+    // } catch (e) { 
+    //   console.error("Error adding document: ", e);
+    // }
   }
 
 
@@ -136,14 +144,12 @@ export async function addOrderToMaster(element:orderMasterDataT) {
 //  return data;
 // new version
 
-let data = [] as orderMasterDataTArr;
-  
+let data = [] as orderMasterDataT[];
     const q = query(collection(db, "orderMaster"));
     const querySnapshot = await getDocs(q);
-
-   
     querySnapshot.forEach((doc) => {
-      data = doc.data() as orderMasterDataTArr;
+      const docData = doc.data() as orderMasterDataT;
+      data.push(docData);
     });
     return data;
 
