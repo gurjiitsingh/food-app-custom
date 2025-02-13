@@ -3,7 +3,6 @@ import { fetchProducts } from '@/app/action/products/dbOperation';
 import React, { useEffect, useState } from 'react'
 import PageProductDetailComponent from './components/PageProductDetailComponent';
 import Hero from '@/components/Hero';
-import {  ProductTypeArr } from '@/lib/types/productType';
 import { cartDataT } from '@/lib/types/cartDataType';
 
 //import { TnewProductSchema } from '@/lib/types';
@@ -24,7 +23,7 @@ export default function Page() {
      fetchproductData();
    }, []);
 
-  return (<>
+  return (<div className='overflow-hidden'>
      
     
     <Hero />
@@ -41,6 +40,6 @@ return (
     
    </div>
     </div>
-    </>
+    </div>
   )
 }

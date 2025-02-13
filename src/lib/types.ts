@@ -69,7 +69,12 @@ export const editPorductSchema = z.object({
   name: z.string().min(4, { message: "Product name is required" }),
   price: z
     .string()
-    .refine((value) => /^\d+$/.test(value), "Invalid product price"), // Refinement
+    //.refine((value) => /^\d+$/.test(value), "Invalid product price"), // Refinement
+    .refine((value) => /^\d*[.,]?\d*$/.test(value), "Invalid product price"), // Refinement
+                      //  ^\d*[.,]?\d*$
+  // price: z
+  //   .string()
+  //   .refine((value) => /^\d+$/.test(value), "Invalid product price"), // Refinement
   productCat: z.string().min(1, { message: "Please select category" }),
   productDesc: z
     .string()

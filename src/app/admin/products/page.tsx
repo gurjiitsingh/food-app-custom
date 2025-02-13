@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from "@nextui-org/react"
 import ListView from './components/ListView'
 import Link from "next/link"
 

@@ -12,10 +12,10 @@ const MiniCartContent = () => {
   }, [cartData]);
   return (
     <div className="flex flex-col gap-4 bg-white px-3 flex-1 ">
-      <div className="py-5 px-12 border-b">
-        <h1 className=" text-[1.7rem]">Dein Warenkorb</h1>
+      <div className="py-1 px-3 border-b">
+        <h1 className=" text-[1.1rem]">Dein Warenkorb</h1>
       </div>
-      <div>
+      <div><div className='max-h-[300px] overflow-y-auto'>
         {cartData.map((item) => {
            return (
            
@@ -23,6 +23,7 @@ const MiniCartContent = () => {
            
           );
         })}
+        </div>
       </div>
     </div>
   );

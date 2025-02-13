@@ -37,15 +37,25 @@ const ProductList = ({ item }) => {
       </div>
       <div className="w-full flex flex-col justify-between gap-2 p-2 ">
         <div className="flex flex-row gap-3  items-start ">
-          <div className="text-sm w-[87%] flex items-start ">{item.name}</div>
+          <div className="text-md w-[87%] flex items-start ">{item.name}</div>
 
           <div className="text-[1rem] w-[13%] flex items-start justify-end "> &euro;{item.price}</div>
         </div>
-        <div> {item.productDesc} </div>
+        <div className="text-sm"> {item.productDesc} </div>
 
         <div className="flex flex-row justify-between ">
           <div className="flex justify-between items-center gap-2 ">
           <div className="flex justify-center items-center gap-4 bg-red-500">
+
+          <div className=" px-2 text-sm text-orange-500">
+              <button
+                onClick={removeCartProduct.bind(null, item)}
+                className=" rounded-sm text-white"
+              >
+                Remove
+              </button>
+            </div>
+
             <div className="flex justify-center items-center gap-2 bg-slate-500">
               <button
                 className=" rounded-sm bg-slate-300 p-1"
@@ -63,14 +73,9 @@ const ProductList = ({ item }) => {
               </button>
             </div>
 
-            <div className="border-r px-2 text-sm text-orange-500">
-              <button
-                onClick={removeCartProduct.bind(null, item)}
-                className=" rounded-sm text-white"
-              >
-                Remove
-              </button>
-            </div>
+            
+
+
             </div>
           </div>
 

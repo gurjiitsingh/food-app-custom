@@ -4,26 +4,18 @@ type productTableProps = {
   limit?: number;
   title?: string;
 };
-//import { TProduct } from "@/types/products";
-
 
 import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
- // TableCell,
+  // TableCell,
   TableHead,
   TableHeader,
   TableRow,
   // TableCaption,
 } from "@/components/ui/table";
 
-//import { Button } from "../ui/button";
-// import Link from "next/link";
-// import Image from "next/image";
-// import { Button } from "@/components/ui/button";
-// import { MdDeleteForever } from "react-icons/md";
-//import { CiEdit } from "react-icons/ci";
 import TableRows from "./TableRows";
 import { fetchProducts } from "@/app/action/products/dbOperation";
 import { cartDataT } from "@/lib/types/cartDataType";
@@ -31,35 +23,31 @@ import { cartDataT } from "@/lib/types/cartDataType";
 
 const ListView = ({ title }: productTableProps) => {
   const [productData, setProductData] = useState<cartDataT[]>([]);
-// var pageNo = 1;
-// var limit = 10
+  // var pageNo = 1;
+  // var limit = 10
 
   useEffect(() => {
-    async function fetchProduct(){
-
-
+    async function fetchProduct() {
       try {
-
-        const result = await fetchProducts()
-        setProductData(result)
+        const result = await fetchProducts();
+        console.log("---------", result)
+        setProductData(result);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    
-   };
+    }
     fetchProduct();
-  
+    
   }, []);
-
 
   // function handleDelete(id:string){
   //   console.log(id)
   // }
   // Sort posts in dec product based on date
 
-//   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
-//     return new Date(b.date).getTime() - new Date(a.date).getTime();
-//   });
+  //   const sortedproducts: TProduct[] = [...products].sort((a, b) => {
+  //     return new Date(b.date).getTime() - new Date(a.date).getTime();
+  //   });
 
   return (
     <>
@@ -68,28 +56,30 @@ const ListView = ({ title }: productTableProps) => {
           {title ? title : "Products"}
         </h3>
         <div className="bg-slate-50 rounded-lg p-1">
-        <Table >
-          {/* <TableCaption>Product List</TableCaption> */}
-          <TableHeader>
-            <TableRow>
-              <TableHead className="hidden md:table-cell">Product Name</TableHead>
-              <TableHead className="hidden md:table-cell">Product Price</TableHead>
-              <TableHead className="hidden md:table-cell">Image</TableHead>
-             
-              <TableHead>Category</TableHead>
-              <TableHead>Brand</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="hidden md:table-cell">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {productData.map((product) => {
-              return (
-                <TableRows key={product.id} product={product} />
-              );
-            })}
-          </TableBody>
-        </Table></div>
+          <Table>
+            {/* <TableCaption>Product List</TableCaption> */}
+            <TableHeader>
+              <TableRow>
+                <TableHead className="hidden md:table-cell">
+                  Product Name
+                </TableHead>
+                <TableHead className="hidden md:table-cell">
+                  Product Price
+                </TableHead>
+                <TableHead className="hidden md:table-cell">Image</TableHead>
+
+                <TableHead>Category</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="hidden md:table-cell">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {productData.map((product) => {
+                return <TableRows key={product.id} product={product} />;
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </>
   );
