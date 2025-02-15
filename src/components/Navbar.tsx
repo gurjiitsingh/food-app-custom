@@ -2,9 +2,10 @@ import Link from "next/link";
 import React from "react";
 
 const menuList = [
-  { name: "Abonnement", link: "/" },
+  { name: "Home", link: "/" },
+  { name: "Abonnement", link: "/abonnement" },
   { name: "Unsere Gerichte", link: "/menu" },
-  { name: "Funktionsweise", link: "/contact" },
+  { name: "Funktionsweise", link: "/funktionsweise" },
 ];
 
 function Navbar() {

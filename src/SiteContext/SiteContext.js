@@ -1,6 +1,6 @@
 "use client"
-import { dropdown } from "@nextui-org/react";
-import React, { createContext, useContext, useState } from "react";
+
+import  { createContext, useContext } from "react";
 
 
 const SiteContext = createContext({

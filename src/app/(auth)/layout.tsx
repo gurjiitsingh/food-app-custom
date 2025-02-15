@@ -1,4 +1,4 @@
-import { NextUIProvider } from '@nextui-org/react';
+//import { NextUIProvider } from '@nextui-org/react';
 import "../globals.css";
 const AuthLayout = ({children}:{children:React.ReactNode}) => {
 
@@ -7,9 +7,9 @@ const AuthLayout = ({children}:{children:React.ReactNode}) => {
       {/* <body className={inter.className}> */}
       <body className="bg-gradient-to-r from-indigo-40 via-purple-40 to-pink-40">
 
-      <NextUIProvider>
+      {/* <NextUIProvider> */}
     <div>{children}</div>
-    </NextUIProvider>
+    {/* </NextUIProvider> */}
 
       </body>
    
